@@ -8,4 +8,5 @@ regex = "0.2.1"
 rand = "0.3"
 
 [lib]
+name = "regex_leak"
 crate-type = ["cdylib"]
