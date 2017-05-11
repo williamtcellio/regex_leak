@@ -18,7 +18,7 @@ pub extern fn match_random_strings(num_strings: usize) -> c_int {
     let mut matches = 0;
     let mut rng = weak_rng();
     for _ in 0..num_strings {
-        rng.shuffle(&mut value);    // Should be ok as long as the string only contains ascii
+        rng.shuffle(&mut (value.clone()));    // Should be ok as long as the string only contains ascii
         matches += match str::from_utf8(&value) {
             Ok(value_str) => if matcher.is_match(value_str) { 1 } else { 0 },
             _ => return -2
