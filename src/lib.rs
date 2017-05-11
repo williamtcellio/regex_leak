@@ -30,7 +30,7 @@ pub mod matcher {
 
 #[cfg(test)]
 mod tests {
-    use match_random_strings;
+    use matcher::match_random_strings;
 
     #[test]
     fn test_regex() {
