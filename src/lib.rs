@@ -9,7 +9,7 @@ use rand::{Rng, weak_rng};
 // Counts how many of a specified number of random transformations of a string that matches a certain pattern, returns the number of matches or negative for error
 #[no_mangle]
 pub extern fn match_random_strings(num_strings: usize) -> c_int {
-    let pattern = "([';]--|--[\\s\\r\\n\\v\\f]|(?:--[^-]*?-)|([^\\-&])#.*?[\\s\\r\\n\\v\\f]|;?\\\\x00)";
+    let pattern = "^[a-zA-Z0-9_\\s\\r\\n\\t]*$";
     let matcher = match RegexBuilder::new(pattern).case_insensitive(true).dot_matches_new_line(true).multi_line(true).build() {
         Ok(regex) => regex,
         Err(_) => return -1
