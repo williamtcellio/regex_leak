@@ -1,0 +1,7 @@
+[package]
+name = "regex_leak"
+version = "0.1.0"
+authors = ["william <william@tcell.io>"]
+
+[dependencies]
+regex = "0.2.1"
