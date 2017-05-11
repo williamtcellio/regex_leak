@@ -9,12 +9,12 @@ use rand::{Rng, weak_rng};
 // Counts how many of a specified number of random transformations of a string that matches a certain pattern, returns the number of matches or negative for error
 #[no_mangle]
 pub extern fn match_random_strings(num_strings: usize) -> c_int {
-    let pattern = r"(?:<(script|iframe|embed|frame|frameset|object|img|applet|body|html|style|layer|link|ilayer|meta|bgsound))";
+    let pattern = "([';]--|--[\\s\\r\\n\\v\\f]|(?:--[^-]*?-)|([^\\-&])#.*?[\\s\\r\\n\\v\\f]|;?\\\\x00)";
     let matcher = match RegexBuilder::new(pattern).case_insensitive(true).dot_matches_new_line(true).multi_line(true).build() {
         Ok(regex) => regex,
         Err(_) => return -1
     };
-    let mut value = r"<script>alert(123)</script><div><frame>Second Div</frame></div></body></html>".as_bytes().to_owned();
+    let mut value = r"<script>alert(123)</script><div><frame>Second Div</frame><p>1=1;\\x00</p></div></body></html>".as_bytes().to_owned();
     let mut matches = 0;
     let mut rng = weak_rng();
     for _ in 0..num_strings {
@@ -34,6 +34,8 @@ mod tests {
 
     #[test]
     fn test_regex() {
-        assert!(match_random_strings(1000) >= 0);
+        let result = match_random_strings(1000);
+        println!("Result was {}", result);
+        assert!(result >= 0);
     }
 }
